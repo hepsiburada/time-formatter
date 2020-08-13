@@ -234,7 +234,7 @@ func TestFormatter_To(t *testing.T) {
 					layout: fmt.Sprintf("%s", A),
 				},
 				want: func(timeNow time.Time) string {
-					if timeNow.Hour() > 12 && timeNow.Minute() > 0 && timeNow.Second() > 0 {
+					if timeNow.Hour() >= 12 {
 						return "PM"
 					} else {
 						return "AM"
@@ -250,7 +250,7 @@ func TestFormatter_To(t *testing.T) {
 					layout: fmt.Sprintf("%s", A),
 				},
 				want: func(timeNow time.Time) string {
-					if timeNow.Hour() > 12 && timeNow.Minute() > 0 && timeNow.Second() > 0 {
+					if timeNow.Hour() >= 12 {
 						return "PM"
 					} else {
 						return "AM"
@@ -266,7 +266,7 @@ func TestFormatter_To(t *testing.T) {
 					layout: fmt.Sprintf("%s", a),
 				},
 				want: func(timeNow time.Time) string {
-					if timeNow.Hour() > 12 && timeNow.Minute() > 0 && timeNow.Second() > 0 {
+					if timeNow.Hour() >= 12 {
 						return "pm"
 					} else {
 						return "am"
@@ -282,7 +282,7 @@ func TestFormatter_To(t *testing.T) {
 					layout: fmt.Sprintf("%s", a),
 				},
 				want: func(timeNow time.Time) string {
-					if timeNow.Hour() > 12 && timeNow.Minute() > 0 && timeNow.Second() > 0 {
+					if timeNow.Hour() >= 12 {
 						return "pm"
 					} else {
 						return "am"
