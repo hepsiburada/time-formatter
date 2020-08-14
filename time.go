@@ -129,14 +129,14 @@ var operationMap = map[string]func(t time.Time) string{
 		return fmt.Sprintf("%d", (t.Month()/4)+1)
 	},
 	A: func(t time.Time) string {
-		if t.Hour() > 12 && t.Minute() > 0 && t.Second() > 0 {
+		if t.Hour() >= 12 {
 			return "PM"
 		} else {
 			return "AM"
 		}
 	},
 	a: func(t time.Time) string {
-		if t.Hour() > 12 && t.Minute() > 0 && t.Second() > 0 {
+		if t.Hour() >= 12 {
 			return "pm"
 		} else {
 			return "am"
