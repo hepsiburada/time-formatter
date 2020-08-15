@@ -30,98 +30,98 @@ var languageMonthsMap = map[LocaleType][]string{
 	},
 }
 
-var formatFuncsMap = map[FormatType]func(to ToOptions) string{
-	D: func(to ToOptions) string {
+var formatFuncsMap = map[FormatType]func(to ToOpts) string{
+	D: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Day())
 	},
-	DD: func(to ToOptions) string {
+	DD: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Day())
 	},
-	DDD: func(to ToOptions) string {
+	DDD: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.YearDay())
 	},
-	DDDD: func(to ToOptions) string {
+	DDDD: func(to ToOpts) string {
 		return languageDaysMap[to.locale][to.time.Weekday()][:3]
 	},
-	DDDDD: func(to ToOptions) string {
+	DDDDD: func(to ToOpts) string {
 		return languageDaysMap[to.locale][to.time.Weekday()]
 	},
-	M: func(to ToOptions) string {
+	M: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Month())
 	},
-	MM: func(to ToOptions) string {
+	MM: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Month())
 	},
-	MMM: func(to ToOptions) string {
+	MMM: func(to ToOpts) string {
 		return languageMonthsMap[to.locale][to.time.Month()-1][:3]
 	},
-	MMMM: func(to ToOptions) string {
+	MMMM: func(to ToOpts) string {
 		return languageMonthsMap[to.locale][to.time.Month()-1]
 	},
-	YY: func(to ToOptions) string {
+	YY: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Year())[2:]
 	},
-	YYYY: func(to ToOptions) string {
+	YYYY: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Year())
 	},
-	Q: func(to ToOptions) string {
+	Q: func(to ToOpts) string {
 		return fmt.Sprintf("%d", (to.time.Month()/4)+1)
 	},
-	A: func(to ToOptions) string {
+	A: func(to ToOpts) string {
 		if to.time.Hour() >= 12 {
 			return "PM"
 		} else {
 			return "AM"
 		}
 	},
-	a: func(to ToOptions) string {
+	a: func(to ToOpts) string {
 		if to.time.Hour() >= 12 {
 			return "pm"
 		} else {
 			return "am"
 		}
 	},
-	H: func(to ToOptions) string {
+	H: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Hour())
 	},
-	HH: func(to ToOptions) string {
+	HH: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Hour())
 	},
-	h: func(to ToOptions) string {
+	h: func(to ToOpts) string {
 		if to.time.Hour() > 12 {
 			return fmt.Sprintf("%d", to.time.Hour()-12)
 		} else {
 			return fmt.Sprintf("%d", to.time.Hour())
 		}
 	},
-	hh: func(to ToOptions) string {
+	hh: func(to ToOpts) string {
 		if to.time.Hour() > 12 {
 			return fmt.Sprintf("%02d", to.time.Hour()-12)
 		} else {
 			return fmt.Sprintf("%02d", to.time.Hour())
 		}
 	},
-	m: func(to ToOptions) string {
+	m: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Minute())
 	},
-	mm: func(to ToOptions) string {
+	mm: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Minute())
 	},
-	s: func(to ToOptions) string {
+	s: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Second())
 	},
-	ss: func(to ToOptions) string {
+	ss: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Second())
 	},
-	Z: func(to ToOptions) string {
+	Z: func(to ToOpts) string {
 		name, _ := to.time.Zone()
 		return fmt.Sprintf("%s:00", name)
 	},
-	ZZ: func(to ToOptions) string {
+	ZZ: func(to ToOpts) string {
 		name, _ := to.time.Zone()
 		return fmt.Sprintf("%s00", name)
 	},
-	X: func(to ToOptions) string {
+	X: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Unix())
 	},
 }
@@ -138,7 +138,7 @@ func (f *Formatter) To(t time.Time, layout string) string {
 	for _, field := range fields {
 		if _, ok := keys[field]; !ok {
 			if operationFunc, ok := formatFuncsMap[FormatType(field)]; ok {
-				layout = strings.ReplaceAll(layout, field, operationFunc(ToOptions{time: t, locale: f.currentLocale}))
+				layout = strings.ReplaceAll(layout, field, operationFunc(ToOpts{time: t, locale: f.currentLocale}))
 			}
 			keys[field] = true
 		}

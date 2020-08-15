@@ -63,7 +63,7 @@ type LocaleTypeOptions struct {
 	MonthValues []string
 }
 
-type ToOptions struct {
+type ToOpts struct {
 	time   time.Time
 	locale LocaleType
 }
