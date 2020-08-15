@@ -1,4 +1,4 @@
-package time
+package time_formatter
 
 import (
 	"fmt"
@@ -7,22 +7,35 @@ import (
 	"time"
 )
 
-func TestNew(t *testing.T) {
-	t.Run("DayOrMonthValuesWasNil", func(t *testing.T) {
-		formatter, err := New(LocaleTypeOptions{
-			LocaleType:  TR,
+func TestAddOpts(t *testing.T) {
+	t.Run("LocaleTypeValueWasNil", func(t *testing.T) {
+		formatter := New()
+		err := formatter.AddOpts(LocaleTypeOptions{
+			LocaleType:  "",
 			DayValues:   nil,
 			MonthValues: nil,
 		})
 
-		assert.Nil(t, formatter)
 		assert.NotNil(t, err)
-		assert.Error(t, err, "DayValues or MonthValues was null")
+		assert.Error(t, err, "Locale type cannot be empty!")
+	})
+
+	t.Run("DayOrMonthValuesWasNil", func(t *testing.T) {
+		formatter := New()
+		err := formatter.AddOpts(LocaleTypeOptions{
+			LocaleType:  "fb",
+			DayValues:   nil,
+			MonthValues: nil,
+		})
+
+		assert.NotNil(t, err)
+		assert.Error(t, err, "Day or Month values cannot be empty!")
 	})
 
 	t.Run("DayOrMonthValuesWasNotNil", func(t *testing.T) {
-		formatter, err := New(LocaleTypeOptions{
-			LocaleType:  "FR",
+		formatter := New()
+		err := formatter.AddOpts(LocaleTypeOptions{
+			LocaleType:  "fb",
 			DayValues:   []string{"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"},
 			MonthValues: []string{"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"},
 		})
@@ -33,33 +46,35 @@ func TestNew(t *testing.T) {
 }
 
 func TestFormatter_ChangeLocale(t *testing.T) {
-	DefaultFormatter.ChangeLocale(EN)
+	formatter := New()
+	assert.Equal(t, EN, formatter.CurrentLocaleType())
 
-	assert.Equal(t, EN, currentLocale)
-
-	DefaultFormatter.ChangeLocale(TR)
-
-	assert.Equal(t, TR, currentLocale)
+	formatter.ChangeLocale(TR)
+	assert.Equal(t, TR, formatter.CurrentLocaleType())
 }
 
 func TestFormatter_To(t *testing.T) {
 	t.Run("DefaultFormatterChangeLocaleWithSupportedLocale", func(t *testing.T) {
-		DefaultFormatter.ChangeLocale(EN)
+		formatter := New()
 
 		timeNow := time.Now()
+		currentLocale := formatter.CurrentLocaleType()
 
-		assert.Equal(t, languageDaysMap[currentLocale][timeNow.Weekday()], DefaultFormatter.To(timeNow, fmt.Sprintf("%s", DDDDD)))
-		assert.Equal(t, languageMonthsMap[currentLocale][timeNow.Month()-1], DefaultFormatter.To(timeNow, fmt.Sprintf("%s", MMMM)))
+		assert.Equal(t, languageDaysMap[currentLocale][timeNow.Weekday()], formatter.To(timeNow, fmt.Sprintf("%s", DDDDD)))
+		assert.Equal(t, languageMonthsMap[currentLocale][timeNow.Month()-1], formatter.To(timeNow, fmt.Sprintf("%s", MMMM)))
 	})
 
 	t.Run("CreateFormatterWithNewLocale", func(t *testing.T) {
-		formatter, err := New(LocaleTypeOptions{
+		formatter := New()
+		err := formatter.AddOpts(LocaleTypeOptions{
 			LocaleType:  "FR",
 			DayValues:   []string{"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"},
 			MonthValues: []string{"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"},
 		})
+		assert.Nil(t, err)
 
 		timeNow := time.Now()
+		currentLocale := formatter.CurrentLocaleType()
 
 		assert.Nil(t, err)
 		assert.NotNil(t, formatter)
@@ -68,6 +83,9 @@ func TestFormatter_To(t *testing.T) {
 	})
 
 	t.Run("DateFormatWithDefaultLocale", func(t *testing.T) {
+		formatter := New()
+		currentLocale := formatter.CurrentLocaleType()
+
 		type fields struct {
 			options LocaleTypeOptions
 		}
@@ -466,9 +484,7 @@ func TestFormatter_To(t *testing.T) {
 		}
 		for _, tt := range tests {
 			t.Run(tt.name, func(t *testing.T) {
-				f := &Formatter{
-					options: tt.fields.options,
-				}
+				f := New()
 				if got := f.To(tt.args.t, tt.args.layout); got != tt.want(tt.args.t) {
 					t.Errorf("To() = %v, want %v", got, tt.want(tt.args.t))
 				}
@@ -478,9 +494,12 @@ func TestFormatter_To(t *testing.T) {
 	})
 
 	t.Run("MultipleSameTokenInLayout", func(t *testing.T) {
+		formatter := New()
+		currentLocale := formatter.CurrentLocaleType()
+
 		timeNow := time.Now()
 
-		value := DefaultFormatter.To(timeNow, fmt.Sprintf("%s:%s:%s, %s", D, MMMM, YYYY, D))
+		value := formatter.To(timeNow, fmt.Sprintf("%s:%s:%s, %s", D, MMMM, YYYY, D))
 
 		assert.Equal(t, fmt.Sprintf("%s:%s:%s, %s",
 			fmt.Sprintf("%d", timeNow.Day()),
