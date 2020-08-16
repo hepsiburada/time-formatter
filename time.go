@@ -215,8 +215,8 @@ func New(options LocaleTypeOptions) (*Formatter, error) {
 	}
 
 	currentLocale = options.LocaleType
-	languageDaysMap[options.LocaleType] = options.DayValues
-	languageMonthsMap[options.LocaleType] = options.MonthValues
+	languageDaysMap[currentLocale] = options.DayValues
+	languageMonthsMap[currentLocale] = options.MonthValues
 
 	return &Formatter{options: options}, nil
 }
