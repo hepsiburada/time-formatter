@@ -12,6 +12,36 @@ go get "github.com/hepsiburada/time-formatter"
 
 ```
 
+## Usage
+
+```go
+
+import (
+	"fmt"
+	tf "github.com/hepsiburada/time-formatter"
+	"time"
+)
+
+func main() {
+	formatter := tf.New()
+	fmt.Println(formatter.To(time.Now(), fmt.Sprintf("In stock on %s %s!", tf.DD, tf.MMMM)))
+
+	// or
+	err := formatter.AddOpts(tf.LocaleTypeOptions{
+		LocaleType:  "FR",
+		DayValues:   []string{"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"},
+		MonthValues: []string{"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"},
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	formatter.ChangeLocale("FR")
+	fmt.Println(formatter.To(time.Now(), fmt.Sprintf("En stock le %s %s!", tf.DD, tf.MMMM)))
+}
+
+```
+
 ## Importing packages
 
 Import all necessary packages.("fmt" - Print, "time" - Getting time from machine, "testify" - A toolkit with common assertions) 
@@ -45,11 +75,3 @@ Import all necessary packages.("fmt" - Print, "time" - Getting time from machine
 | Time Zone      | Z     | -07:00 -06:00 ... +06:00 +07:00        |
 |                | ZZ    | -0700 -0600 ... +0600 +0700            |
 | Unix Timestamp | X     | 1360013296                             |
-
-## Default Formatter
-
-```go
-
-DefaultFormatter.To(time.Now(), fmt.Sprintf("%s %s tarihinde stoklarda!", DD, MMMM))
-
-```
