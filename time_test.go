@@ -60,8 +60,8 @@ func TestFormatter_To(t *testing.T) {
 		timeNow := time.Now()
 		currentLocale := formatter.CurrentLocaleType()
 
-		assert.Equal(t, languageDaysMap[currentLocale][timeNow.Weekday()], formatter.To(timeNow, fmt.Sprintf("%s", DDDDD)))
-		assert.Equal(t, languageMonthsMap[currentLocale][timeNow.Month()-1], formatter.To(timeNow, fmt.Sprintf("%s", MMMM)))
+		assert.Equal(t, languageDaysMap[currentLocale][timeNow.Weekday()], formatter.To(timeNow, fmt.Sprintf("%s", TIME_DDDDD)))
+		assert.Equal(t, languageMonthsMap[currentLocale][timeNow.Month()-1], formatter.To(timeNow, fmt.Sprintf("%s", TIME_MMMM)))
 	})
 
 	t.Run("CreateFormatterWithNewLocale", func(t *testing.T) {
@@ -78,8 +78,8 @@ func TestFormatter_To(t *testing.T) {
 
 		assert.Nil(t, err)
 		assert.NotNil(t, formatter)
-		assert.Equal(t, languageDaysMap[currentLocale][timeNow.Weekday()], formatter.To(timeNow, fmt.Sprintf("%s", DDDDD)))
-		assert.Equal(t, languageMonthsMap[currentLocale][timeNow.Month()-1], formatter.To(timeNow, fmt.Sprintf("%s", MMMM)))
+		assert.Equal(t, languageDaysMap[currentLocale][timeNow.Weekday()], formatter.To(timeNow, fmt.Sprintf("%s", TIME_DDDDD)))
+		assert.Equal(t, languageMonthsMap[currentLocale][timeNow.Month()-1], formatter.To(timeNow, fmt.Sprintf("%s", TIME_MMMM)))
 	})
 
 	t.Run("DateFormatWithDefaultLocale", func(t *testing.T) {
@@ -105,7 +105,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", D),
+					layout: fmt.Sprintf("%s", TIME_D),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Day())
@@ -117,7 +117,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", DD),
+					layout: fmt.Sprintf("%s", TIME_DD),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%02d", timeNow.Day())
@@ -129,7 +129,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", DDD),
+					layout: fmt.Sprintf("%s", TIME_DDD),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.YearDay())
@@ -141,7 +141,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", DDDD),
+					layout: fmt.Sprintf("%s", TIME_DDDD),
 				},
 				want: func(timeNow time.Time) string {
 					return languageDaysMap[currentLocale][timeNow.Weekday()][:3]
@@ -153,7 +153,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", DDDDD),
+					layout: fmt.Sprintf("%s", TIME_DDDDD),
 				},
 				want: func(timeNow time.Time) string {
 					return languageDaysMap[currentLocale][timeNow.Weekday()]
@@ -165,7 +165,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", M),
+					layout: fmt.Sprintf("%s", TIME_M),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Month())
@@ -177,7 +177,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", MM),
+					layout: fmt.Sprintf("%s", TIME_MM),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%02d", timeNow.Month())
@@ -189,7 +189,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", MMM),
+					layout: fmt.Sprintf("%s", TIME_MMM),
 				},
 				want: func(timeNow time.Time) string {
 					return languageMonthsMap[currentLocale][timeNow.Month()-1][:3]
@@ -201,7 +201,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", MMMM),
+					layout: fmt.Sprintf("%s", TIME_MMMM),
 				},
 				want: func(timeNow time.Time) string {
 					return languageMonthsMap[currentLocale][timeNow.Month()-1]
@@ -213,7 +213,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", YY),
+					layout: fmt.Sprintf("%s", TIME_YY),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Year())[2:]
@@ -225,7 +225,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", YYYY),
+					layout: fmt.Sprintf("%s", TIME_YYYY),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Year())
@@ -237,7 +237,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", Q),
+					layout: fmt.Sprintf("%s", TIME_Q),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", (timeNow.Month()/4)+1)
@@ -249,7 +249,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", A),
+					layout: fmt.Sprintf("%s", TIME_A),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() >= 12 {
@@ -265,7 +265,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now().Add(12 * time.Hour),
-					layout: fmt.Sprintf("%s", A),
+					layout: fmt.Sprintf("%s", TIME_A),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() >= 12 {
@@ -281,7 +281,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", a),
+					layout: fmt.Sprintf("%s", TIME_a),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() >= 12 {
@@ -297,7 +297,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now().Add(12 * time.Hour),
-					layout: fmt.Sprintf("%s", a),
+					layout: fmt.Sprintf("%s", TIME_a),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() >= 12 {
@@ -313,7 +313,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", H),
+					layout: fmt.Sprintf("%s", TIME_H),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Hour())
@@ -325,7 +325,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", HH),
+					layout: fmt.Sprintf("%s", TIME_HH),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%02d", timeNow.Hour())
@@ -337,7 +337,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", h),
+					layout: fmt.Sprintf("%s", TIME_h),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() > 12 {
@@ -353,7 +353,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now().Add(12 * time.Hour),
-					layout: fmt.Sprintf("%s", h),
+					layout: fmt.Sprintf("%s", TIME_h),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() > 12 {
@@ -369,7 +369,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", hh),
+					layout: fmt.Sprintf("%s", TIME_hh),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() > 12 {
@@ -385,7 +385,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now().Add(12 * time.Hour),
-					layout: fmt.Sprintf("%s", hh),
+					layout: fmt.Sprintf("%s", TIME_hh),
 				},
 				want: func(timeNow time.Time) string {
 					if timeNow.Hour() > 12 {
@@ -401,7 +401,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", m),
+					layout: fmt.Sprintf("%s", TIME_m),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Minute())
@@ -413,7 +413,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", mm),
+					layout: fmt.Sprintf("%s", TIME_mm),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%02d", timeNow.Minute())
@@ -425,7 +425,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", s),
+					layout: fmt.Sprintf("%s", TIME_s),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Second())
@@ -437,7 +437,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", ss),
+					layout: fmt.Sprintf("%s", TIME_ss),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%02d", timeNow.Second())
@@ -449,7 +449,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", Z),
+					layout: fmt.Sprintf("%s", TIME_Z),
 				},
 				want: func(timeNow time.Time) string {
 					name, _ := timeNow.Zone()
@@ -462,7 +462,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", ZZ),
+					layout: fmt.Sprintf("%s", TIME_ZZ),
 				},
 				want: func(timeNow time.Time) string {
 					name, _ := timeNow.Zone()
@@ -475,7 +475,7 @@ func TestFormatter_To(t *testing.T) {
 				fields: fields{},
 				args: args{
 					t:      time.Now(),
-					layout: fmt.Sprintf("%s", X),
+					layout: fmt.Sprintf("%s", TIME_X),
 				},
 				want: func(timeNow time.Time) string {
 					return fmt.Sprintf("%d", timeNow.Unix())
@@ -499,7 +499,7 @@ func TestFormatter_To(t *testing.T) {
 
 		timeNow := time.Now()
 
-		value := formatter.To(timeNow, fmt.Sprintf("%s:%s:%s, %s", D, MMMM, YYYY, D))
+		value := formatter.To(timeNow, fmt.Sprintf("%s:%s:%s, %s", TIME_D, TIME_MMMM, TIME_YYYY, TIME_D))
 
 		assert.Equal(t, fmt.Sprintf("%s:%s:%s, %s",
 			fmt.Sprintf("%d", timeNow.Day()),

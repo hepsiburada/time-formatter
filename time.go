@@ -31,97 +31,97 @@ var languageMonthsMap = map[LocaleType][]string{
 }
 
 var formatFuncsMap = map[FormatType]func(to ToOpts) string{
-	D: func(to ToOpts) string {
+	TIME_D: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Day())
 	},
-	DD: func(to ToOpts) string {
+	TIME_DD: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Day())
 	},
-	DDD: func(to ToOpts) string {
+	TIME_DDD: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.YearDay())
 	},
-	DDDD: func(to ToOpts) string {
+	TIME_DDDD: func(to ToOpts) string {
 		return languageDaysMap[to.locale][to.time.Weekday()][:3]
 	},
-	DDDDD: func(to ToOpts) string {
+	TIME_DDDDD: func(to ToOpts) string {
 		return languageDaysMap[to.locale][to.time.Weekday()]
 	},
-	M: func(to ToOpts) string {
+	TIME_M: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Month())
 	},
-	MM: func(to ToOpts) string {
+	TIME_MM: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Month())
 	},
-	MMM: func(to ToOpts) string {
+	TIME_MMM: func(to ToOpts) string {
 		return languageMonthsMap[to.locale][to.time.Month()-1][:3]
 	},
-	MMMM: func(to ToOpts) string {
+	TIME_MMMM: func(to ToOpts) string {
 		return languageMonthsMap[to.locale][to.time.Month()-1]
 	},
-	YY: func(to ToOpts) string {
+	TIME_YY: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Year())[2:]
 	},
-	YYYY: func(to ToOpts) string {
+	TIME_YYYY: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Year())
 	},
-	Q: func(to ToOpts) string {
+	TIME_Q: func(to ToOpts) string {
 		return fmt.Sprintf("%d", (to.time.Month()/4)+1)
 	},
-	A: func(to ToOpts) string {
+	TIME_A: func(to ToOpts) string {
 		if to.time.Hour() >= 12 {
 			return "PM"
 		} else {
 			return "AM"
 		}
 	},
-	a: func(to ToOpts) string {
+	TIME_a: func(to ToOpts) string {
 		if to.time.Hour() >= 12 {
 			return "pm"
 		} else {
 			return "am"
 		}
 	},
-	H: func(to ToOpts) string {
+	TIME_H: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Hour())
 	},
-	HH: func(to ToOpts) string {
+	TIME_HH: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Hour())
 	},
-	h: func(to ToOpts) string {
+	TIME_h: func(to ToOpts) string {
 		if to.time.Hour() > 12 {
 			return fmt.Sprintf("%d", to.time.Hour()-12)
 		} else {
 			return fmt.Sprintf("%d", to.time.Hour())
 		}
 	},
-	hh: func(to ToOpts) string {
+	TIME_hh: func(to ToOpts) string {
 		if to.time.Hour() > 12 {
 			return fmt.Sprintf("%02d", to.time.Hour()-12)
 		} else {
 			return fmt.Sprintf("%02d", to.time.Hour())
 		}
 	},
-	m: func(to ToOpts) string {
+	TIME_m: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Minute())
 	},
-	mm: func(to ToOpts) string {
+	TIME_mm: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Minute())
 	},
-	s: func(to ToOpts) string {
+	TIME_s: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Second())
 	},
-	ss: func(to ToOpts) string {
+	TIME_ss: func(to ToOpts) string {
 		return fmt.Sprintf("%02d", to.time.Second())
 	},
-	Z: func(to ToOpts) string {
+	TIME_Z: func(to ToOpts) string {
 		name, _ := to.time.Zone()
 		return fmt.Sprintf("%s:00", name)
 	},
-	ZZ: func(to ToOpts) string {
+	TIME_ZZ: func(to ToOpts) string {
 		name, _ := to.time.Zone()
 		return fmt.Sprintf("%s00", name)
 	},
-	X: func(to ToOpts) string {
+	TIME_X: func(to ToOpts) string {
 		return fmt.Sprintf("%d", to.time.Unix())
 	},
 }
