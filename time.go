@@ -8,8 +8,10 @@ import (
 	"time"
 )
 
-func New() IFormatter {
-	return &Formatter{currentLocale: EN}
+var DefaultFormatter = New(EN)
+
+func New(locale LocaleType) IFormatter {
+	return &Formatter{currentLocale: locale}
 }
 
 var languageDaysMap = map[LocaleType][]string{
